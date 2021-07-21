@@ -18,13 +18,13 @@ def generate_tweets(twittername):
     print(results)
     return str([{'username': twittername, 'text': result} for result in results])
 
-@app.route('/api/v1/ping', methods=['GET'])
-def ping():
-    response = {
-        'success': True,
-        'response': 'pong'
-    }
-    return jsonify(response)
+# @app.route('/api/v1/ping', methods=['GET'])
+# def ping():
+#     response = {
+#         'success': True,
+#         'response': 'pong'
+#     }
+#     return jsonify(response)
 
 # from http.server import BaseHTTPRequestHandler
 # from datetime import datetime
