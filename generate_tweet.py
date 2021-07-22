@@ -6,7 +6,10 @@ import os
 import tweepy
 import requests
 import json
+from dotenv import load_dotenv
 
+# load environment variables from .env
+load_dotenv()
 
 CONSUMER_KEY=os.environ.get('consumer_key')
 CONSUMER_SECRET=os.environ.get('consumer_secret')
@@ -50,13 +53,18 @@ def get_user_timeline(username) -> List[str]:
     #todo error handling
     max_tokens = 500
     max_len = 2048
-    newest_tweets = api.user_timeline(screen_name=username, count=25, tweet_mode="extended")
+    tweets_to_fetch_count = 5
+    newest_tweets = api.user_timeline(screen_name=username, count=tweets_to_fetch_count, tweet_mode="extended")
+    
     tweet_string = ''
     for tweet in newest_tweets:
         if len(tweet_string) + len(tweet.full_text) <= max_len - max_tokens:
             tweet_string += tweet.full_text + '\n---\n'
 
     # TODO: Filter out links
+    print("------------------------------------")
+    print("Tweets")
+    print("------------------------------------")
     print(tweet_string)
     # openai.api_key = OPEN_AI_API_KEY
     # response = openai.Completion.create(engine="davinci", prompt=tweet_string, max_tokens=max_tokens)
@@ -80,6 +88,9 @@ def get_user_timeline(username) -> List[str]:
         }
 
     response = requests.post(url, headers=headers, data=data_param)
+    print("------------------------------------")
+    print("OPEN AI Response")
+    print("------------------------------------")
     print(response.text)
 
     generated_tweets_array = json.loads(response.text)['choices'][0]['text'].split('\n---\n')

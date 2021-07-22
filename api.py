@@ -14,15 +14,19 @@ def hello():
 def generate_tweets(twittername):
     print(twittername)
     results = get_user_timeline(twittername)
-    return jsonify("test")
     print(results)
-    return str([{'username': twittername, 'text': result} for result in results])
+    data = [{'username': twittername, 'text': result} for result in results]
+    response = {
+        'success': True,
+        'data': data
+    }
+    return jsonify(response)
 
 @app.route('/api/v1/ping', methods=['GET'])
 def ping():
     response = {
         'success': True,
-        'response': 'pong'
+        'data': 'pong'
     }
     return jsonify(response)
 
