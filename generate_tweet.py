@@ -11,16 +11,16 @@ from dotenv import load_dotenv
 # load environment variables from .env
 load_dotenv()
 
-CONSUMER_KEY=os.environ.get('consumer_key')
-CONSUMER_SECRET=os.environ.get('consumer_secret')
-ACCESS_KEY=os.environ.get('access_key')
-ACCESS_SECRET=os.environ.get('access_secret')
+TWITTER_CONSUMER_KEY=os.environ.get('twitter_consumer_key')
+TWITTER_CONSUMER_SECRET=os.environ.get('twitter_consumer_secret')
+TWITTER_ACCESS_KEY=os.environ.get('twitter_access_key')
+TWITTER_ACCESS_SECRET=os.environ.get('twitter_access_secret')
 OPEN_AI_API_KEY=os.environ.get('open_ai_api_key')
 
 BANNED_WORDS = ['http', '@',]
 
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+auth = tweepy.OAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+auth.set_access_token(TWITTER_ACCESS_KEY, TWITTER_ACCESS_SECRET)
 api = tweepy.API(auth)
 
 def get_tweet_text(tweet_id):
@@ -51,7 +51,7 @@ def get_user_timeline(username) -> List[str]:
     Generate a new tweet text
     """
     #todo error handling
-    max_tokens = 500
+    max_tokens = 200
     max_len = 2048
     tweets_to_fetch_count = 5
     newest_tweets = api.user_timeline(screen_name=username, count=tweets_to_fetch_count, tweet_mode="extended")
